@@ -11,6 +11,9 @@ function love.load()
 end
 
 function love.update(dt)
+  print("joy1 btn1 " .. controller[1].joy:isDown(1))
+
+
   -- move players
   for i = 1, game.noPlayers do
     controller[i].x = controller[i].joy:getAxis(1)
