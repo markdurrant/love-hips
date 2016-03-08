@@ -1,7 +1,7 @@
 game = {}
 
-game.x = 500
-game.y = 500
+game.x = 1024
+game.y = 768
 
 game.noPlayers = love.joystick.getJoystickCount()
 game.noNpcs = 20
