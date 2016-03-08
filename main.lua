@@ -1,5 +1,9 @@
+-- get real randoms
+math.randomseed(os.time())
+
 require("game")
 require("player")
+require("npc")
 
 function love.load()
   windowWidth = game.x
@@ -20,7 +24,7 @@ function love.update(dt)
 
     -- expload bombs
     if player[i].bomb.isCool and player[i].joy:isDown(1,2,3,4,5,6,7,8) then
-      --
+      -- expload bomb
       player[i].bomb.exp = true
       player[i].bomb.r = player.bombR
       player[i].bomb.color[4] = 255
@@ -35,7 +39,7 @@ function love.update(dt)
           print("player " .. i .. " killed " .. " player " .. b)
 
           player[b].isAlive = false
-          player[b].color = {0, 0, 0}
+          player[b].color = {150, 150, 200}
         end
       end
       --
@@ -55,6 +59,37 @@ function love.update(dt)
       player[i].bomb.r = 0
     end
   end
+
+  for i = 1, game.noNpcs do
+    -- keep time for npc motion
+    npc[i].dirTimer = npc[i].dirTimer + dt
+
+    -- randomise npc direction
+    if npc[i].dirTimer >= npc[i].dirLimit then
+      npc[i].dir = love.math.random(360)
+      npc[i].dirLimit = love.math.random(2)
+      npc[i].dirTimer = 0
+    end
+
+    if npc[i].x > game.x - player.r then
+      npc[i].x = game.x - player.r
+      npc[i].dir = love.math.random(360)
+    elseif npc[i].x < 0 + player.r then
+      npc[i].x = 0 + player.r
+      npc[i].dir = love.math.random(360)
+    end
+    if npc[i].y > game.y - player.r then
+      npc[i].y = game.y - player.r
+      npc[i].dir = love.math.random(360)
+    elseif npc[i].y < 0 + player.r then
+      npc[i].y = 0 + player.r
+      npc[i].dir = love.math.random(360)
+    end
+
+    -- move npc
+    npc[i].y = npc[i].y + math.sin(npc[i].dir * math.pi/180)
+    npc[i].x = npc[i].x + math.cos(npc[i].dir * math.pi/180)
+  end
 end
 
 function love.draw()
@@ -62,6 +97,12 @@ function love.draw()
   for i = 1, game.noPlayers do
     love.graphics.setColor(player[i].bomb.color)
     love.graphics.circle("fill", player[i].bomb.x, player[i].bomb.y, player[i].bomb.r)
+  end
+
+  -- draw npc
+  for i = 1, game.noNpcs do
+    love.graphics.setColor(npc[i].color)
+    love.graphics.circle("fill", npc[i].x, npc[i].y, player.r)
   end
 
   -- draw players

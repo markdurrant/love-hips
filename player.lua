@@ -8,8 +8,8 @@ player.cooldown = 1
 for i = 1, game.noPlayers do
   p = {}
   p.joy = love.joystick.getJoysticks()[i]
-  p.x = love.math.random(player.r * 2, game.x - player.r * 2)
-  p.y = love.math.random(player.r * 2, game.y - player.r * 2)
+  p.x = math.random(player.r * 2, game.x - player.r * 2)
+  p.y = math.random(player.r * 2, game.y - player.r * 2)
   p.isAlive = true
   p.color = {0, 255, 125}
 
