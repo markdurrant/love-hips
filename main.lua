@@ -11,9 +11,6 @@ function love.load()
 end
 
 function love.update(dt)
-  print("joy1 btn1 " .. controller[1].joy:isDown(1))
-
-
   -- move players
   for i = 1, game.noPlayers do
     controller[i].x = controller[i].joy:getAxis(1)
@@ -37,6 +34,27 @@ function love.update(dt)
       player[i].y = game.y - player.r
     elseif player[i].y < 0 + player.r then
       player[i].y = 0 + player.r
+    end
+
+    -- drop bombs
+    if controller[i].isCool and controller[i].joy:isDown(1, 2, 3, 4, 5, 6, 7) then
+      controller[i].isCool = false
+      player[i].bombR = 1
+    end
+    if controller[i].isCool == false then
+      controller[i].coolDownTimer = controller[i].coolDownTimer + dt
+    end
+    if controller[i].coolDownTimer >= controller.coolDown then
+      controller[i].isCool = true
+      controller[i].coolDownTimer = 0
+    end
+    if player[i].bombR > 0 then
+      player[i].bombX = player[i].x
+      player[i].bombY = player[i].y
+      player[i].bombR = player[i].bombR + dt * 50
+    end
+    if player[i].bombR >= player.bombR then
+      player[i].bombR = 0
     end
   end
 
@@ -74,6 +92,12 @@ function love.update(dt)
 end
 
 function love.draw()
+  -- draw bombs
+  love.graphics.setColor(game.bombColor)
+  for i = 1, game.noPlayers do
+    love.graphics.circle("line", player[i].bombX, player[i].bombY, player[i].bombR)
+  end
+
   -- draw players
   love.graphics.setColor(player.color)
   for i = 1, game.noPlayers do
