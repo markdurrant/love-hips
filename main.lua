@@ -9,7 +9,7 @@ function love.load()
   windowWidth = game.x
   windowHeight = game.y
 
-  love.window.setMode(windowWidth, windowHeight, {msaa = 8, vsync = true})
+  love.window.setMode(windowWidth, windowHeight, {fullscreen = true, msaa = 8, vsync = true})
 
   love.graphics.setBackgroundColor(33, 38, 51)
 
