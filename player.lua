@@ -15,7 +15,7 @@ for i = 1, game.noPlayers do
   p.y = math.random(player.r * 2, game.y - player.r * 2)
   p.isAlive = true
   p.isReady = false
-  p.color = {0, 255, 125}
+  p.color = game.playerColors[math.random(1,5)]
 
   p.bomb = {}
   p.bomb.x = 0

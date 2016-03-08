@@ -9,11 +9,13 @@ function love.load()
   windowWidth = game.x
   windowHeight = game.y
 
-  love.window.setMode(windowWidth, windowHeight)
+  love.window.setMode(windowWidth, windowHeight, {msaa = 8, vsync = true})
 
-  love.graphics.setBackgroundColor(25, 25, 50)
+  love.graphics.setBackgroundColor(33, 38, 51)
 
   lrgFont = love.graphics.newFont("fonts/dosis/Dosis-Bold.ttf", 50)
+
+  msg = "press any button to join"
 end
 
 function love.update(dt)
@@ -30,6 +32,14 @@ function love.update(dt)
 
   if game.deadCount >= game.noPlayers -1 then
     game.isPlaying = false
+    thePlayer = 0
+
+    for i = 1, game.noPlayers do
+      if player[i].isAlive then
+        thePlayer = i
+      end
+    end
+    msg = "player " .. thePlayer .. " is the winner"
   end
 
   if game.isPlaying then
@@ -39,6 +49,18 @@ function love.update(dt)
       if player[i].isAlive then
         player[i].x = player[i].x + player[i].joy:getAxis(1) * 2
         player[i].y = player[i].y + player[i].joy:getAxis(2) * 2
+      end
+
+      -- check for screen edge
+      if player[i].x > game.x - player.r then
+        player[i].x = game.x - player.r
+      elseif player[i].x < 0 + player.r then
+        player[i].x = 0 + player.r
+      end
+      if player[i].y > game.y - player.r then
+        player[i].y = game.y - player.r
+      elseif player[i].y < 0 + player.r then
+        player[i].y = 0 + player.r
       end
 
       -- expload bombs
@@ -146,16 +168,17 @@ function love.draw()
     love.graphics.rectangle("fill", 0, 0, game.x, game.y)
     love.graphics.setFont(lrgFont)
     love.graphics.setColor({255, 255, 255})
-    love.graphics.print("press any button", 80, 100)
+    love.graphics.print(msg, 80, 100)
+    love.graphics.print("1          2          3          4", 80, 300)
 
     -- show ready state of players
     for i = 1, game.noPlayers do
       love.graphics.setColor(player.readyColor)
       love.graphics.setLineWidth(3)
       if player[i].isReady then
-        love.graphics.circle("fill", i * 100, game.y / 2, player.readyR)
+        love.graphics.circle("fill", i * 120 - 30, 400, player.readyR)
       else
-        love.graphics.circle("line", i * 100, game.y / 2, player.readyR)
+        love.graphics.circle("line", i * 120 - 30, 400, player.readyR)
       end
     end
   end
