@@ -1,6 +1,7 @@
 require("game")
 require("controller")
 require("player")
+require("npc")
 
 function love.load()
   windowWidth = game.x
@@ -39,8 +40,15 @@ function love.update(dt)
 end
 
 function love.draw()
+  -- draw players
   love.graphics.setColor(player.color)
   for i = 1, game.noPlayers do
     love.graphics.circle("fill", player[i].x, player[i].y, player.r)
+  end
+
+  -- draw npcs
+  love.graphics.setColor(npc.color)
+  for i = 1, game.noNpc do
+    love.graphics.circle("fill", npc[i].x, npc[i].y, npc.r)
   end
 end
