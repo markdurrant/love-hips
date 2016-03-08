@@ -42,10 +42,6 @@ function love.update(dt)
     -- keep time for npc motion
     npc[i].dirTimer = npc[i].dirTimer + dt
 
-    -- move along set direction
-    npc[i].x = npc[i].x + math.cos(npc[i].dir * math.pi/180)
-    npc[i].y = npc[i].y + math.sin(npc[i].dir * math.pi/180)
-
     -- randomise npc direction
     if npc[i].dirTimer >= npc[i].dirLimit then
       npc[i].dir = love.math.random(360)
@@ -53,17 +49,24 @@ function love.update(dt)
       npc[i].dirTimer = 0
     end
 
-    -- check for screen edge
-    if npc[i].x >= game.x - npc.r then
-      npc[i].dir = love.math.random(180, 360)
-    elseif npc[i].x <= 0 + npc.r then
-      npc[i].dir = love.math.random(0, 180)
+    if npc[i].x > game.x - npc.r then
+      npc[i].x = game.x - npc.r
+      npc[i].dir = love.math.random(360)
+    elseif npc[i].x < 0 + npc.r then
+      npc[i].x = 0 + npc.r
+      npc[i].dir = love.math.random(360)
     end
-    if npc[i].y >= game.y - npc.r then
-      npc[i].dir = love.math.random(90, 270)
-    elseif npc[i].y <= 0 + npc.r then
-      npc[i].dir = love.math.random(270, 450)
+    if npc[i].y > game.y - npc.r then
+      npc[i].y = game.y - npc.r
+      npc[i].dir = love.math.random(360)
+    elseif npc[i].y < 0 + npc.r then
+      npc[i].y = 0 + npc.r
+      npc[i].dir = love.math.random(360)
     end
+
+    -- move npc
+    npc[i].y = npc[i].y + math.sin(npc[i].dir * math.pi/180)
+    npc[i].x = npc[i].x + math.cos(npc[i].dir * math.pi/180)
   end
 end
 
