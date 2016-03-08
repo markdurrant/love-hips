@@ -9,29 +9,18 @@ function love.load()
 end
 
 function love.update(dt)
-  controller.one.x = controller.one.joy:getAxis(1)
-  controller.one.y = controller.one.joy:getAxis(2)
+  controller[1].x = controller[1].joy:getAxis(1)
+  controller[1].y = controller[1].joy:getAxis(2)
 
-  if controller.one.x > 0.2 or controller.one.x < -0.2 then
-    player.one.x = player.one.x + controller.one.x * controller.speed
+  if controller[1].x > 0.2 or controller[1].x < -0.2 then
+    player[1].x = player[1].x + controller[1].x * controller.speed
   end
-  if controller.one.y > 0.2 or controller.one.y < -0.2 then
-    player.one.y = player.one.y + controller.one.y * controller.speed
-  end
-
-  controller.two.x = controller.two.joy:getAxis(1)
-  controller.two.y = controller.two.joy:getAxis(2)
-
-  if controller.two.x > 0.2 or controller.two.x < -0.2 then
-    player.two.x = player.two.x + controller.two.x * controller.speed
-  end
-  if controller.two.y > 0.2 or controller.two.y < -0.2 then
-    player.two.y = player.two.y + controller.two.y * controller.speed
+  if controller[1].y > 0.2 or controller[1].y < -0.2 then
+    player[1].y = player[1].y + controller[1].y * controller.speed
   end
 end
 
 function love.draw()
   love.graphics.setColor(player.color)
-  love.graphics.circle("fill", player.one.x, player.one.y, player.r)
-  love.graphics.circle("fill", player.two.x, player.two.y, player.r)
+  love.graphics.circle("fill", player[1].x, player[1].y, player.r)
 end
