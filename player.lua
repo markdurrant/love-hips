@@ -3,7 +3,7 @@ player = {}
 player.r = 10
 player.bombR = 30
 
-player.cooldown = 1
+player.cooldown = 2
 
 player.readyR = 25
 player.readyColor = {255, 255, 255}
@@ -22,7 +22,7 @@ for i = 1, game.noPlayers do
   p.bomb.y = 0
   p.bomb.r = 0
   p.bomb.color = {50, 50, 125, 255}
-  p.bomb.isCool = true
+  p.bomb.isCool = false
   p.bomb.cdt = 0
   p.bomb.exp = false
 

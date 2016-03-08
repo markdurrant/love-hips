@@ -28,6 +28,10 @@ function love.update(dt)
     game.isPlaying = true
   end
 
+  if game.deadCount >= game.noPlayers -1 then
+    game.isPlaying = false
+  end
+
   if game.isPlaying then
 
     for i = 1, game.noPlayers do
@@ -48,13 +52,14 @@ function love.update(dt)
 
         -- kill player if in blast radius
         for b = 1, game.noPlayers do
-          if b ~= i and
+          if b ~= i and player[b].isAlive and
             ((player[i].bomb.x - player[b].x)^2 + (player[i].bomb.y - player[b].y)^2)^ 0.5 <= player.bombR + player.r
             then
             print("player " .. i .. " killed " .. " player " .. b)
 
             player[b].isAlive = false
             player[b].color = {150, 150, 200}
+            game.deadCount = game.deadCount + 1
           end
         end
         --
@@ -102,8 +107,8 @@ function love.update(dt)
       end
 
       -- move npc
-      npc[i].y = npc[i].y + math.sin(npc[i].dir * math.pi/180)
-      npc[i].x = npc[i].x + math.cos(npc[i].dir * math.pi/180)
+      npc[i].y = npc[i].y + math.sin(npc[i].dir * math.pi/180) * 1.3
+      npc[i].x = npc[i].x + math.cos(npc[i].dir * math.pi/180) * 1.3
     end
   -- game start stuff
   else
@@ -143,6 +148,7 @@ function love.draw()
     love.graphics.setColor({255, 255, 255})
     love.graphics.print("press any button", 80, 100)
 
+    -- show ready state of players
     for i = 1, game.noPlayers do
       love.graphics.setColor(player.readyColor)
       love.graphics.setLineWidth(3)
