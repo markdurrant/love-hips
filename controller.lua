@@ -2,7 +2,7 @@ controller = {}
 
 controller.speed = 10
 
-for i = 1, 4 do
+for i = 1, game.noPlayers do
   c = {}
   c.joy = love.joystick.getJoysticks()[i]
   c.x = 0
