@@ -12,9 +12,22 @@ function love.load()
   love.window.setMode(windowWidth, windowHeight)
 
   love.graphics.setBackgroundColor(25, 25, 50)
+
+  lrgFont = love.graphics.newFont("fonts/dosis/Dosis-Bold.ttf", 50)
 end
 
 function love.update(dt)
+  game.readyCount = 0
+  for i = 1, game.noPlayers do
+    if player[i].isReady then
+      game.readyCount = game.readyCount + 1
+    end
+  end
+
+  if game.readyCount >= game.noPlayers then
+    game.isPlaying = true
+  end
+
   if game.isPlaying then
 
     for i = 1, game.noPlayers do
@@ -92,10 +105,18 @@ function love.update(dt)
       npc[i].y = npc[i].y + math.sin(npc[i].dir * math.pi/180)
       npc[i].x = npc[i].x + math.cos(npc[i].dir * math.pi/180)
     end
+  -- game start stuff
+  else
+    for i = 1, game.noPlayers do
+      if player[i].joy:isDown(1,2,3,4,5,6,7,8) then
+        player[i].isReady = true
+      end
+    end
   end
 end
 
 function love.draw()
+
   -- draw bombs
   for i = 1, game.noPlayers do
     love.graphics.setColor(player[i].bomb.color)
@@ -112,5 +133,24 @@ function love.draw()
   for i = 1, game.noPlayers do
     love.graphics.setColor(player[i].color)
     love.graphics.circle("fill", player[i].x, player[i].y, player.r)
+  end
+
+  -- show start state
+  if game.isPlaying == false then
+    love.graphics.setColor({0, 0, 50, 175})
+    love.graphics.rectangle("fill", 0, 0, game.x, game.y)
+    love.graphics.setFont(lrgFont)
+    love.graphics.setColor({255, 255, 255})
+    love.graphics.print("press any button", 80, 100)
+
+    for i = 1, game.noPlayers do
+      love.graphics.setColor(player.readyColor)
+      love.graphics.setLineWidth(3)
+      if player[i].isReady then
+        love.graphics.circle("fill", i * 100, game.y / 2, player.readyR)
+      else
+        love.graphics.circle("line", i * 100, game.y / 2, player.readyR)
+      end
+    end
   end
 end

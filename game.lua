@@ -7,5 +7,7 @@ game.noPlayers = love.joystick.getJoystickCount()
 game.noNpcs = 20
 
 game.isPlaying = false
+game.isReady = false
+game.readyCount = 0
 
 return game
