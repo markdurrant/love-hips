@@ -1,6 +1,6 @@
 controller = {}
 
-controller.speed = 10
+controller.speed = 1
 
 for i = 1, game.noPlayers do
   c = {}
