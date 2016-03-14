@@ -18,6 +18,9 @@ font.roboto = {
 }
 
 -- set base font
-font.base = love.graphics.newFont(font.roboto.thin, 180)
+font.base = love.graphics.newFont(font.roboto.light, 60)
+
+font.header = love.graphics.newFont(font.roboto.thin, 180)
+font.footer = love.graphics.newFont(font.roboto.thin, 60)
 
 return font

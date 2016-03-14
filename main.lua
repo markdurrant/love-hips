@@ -1,7 +1,9 @@
 -- load modules
 require("util")
 require("window")
+require("gameState")
 require("font")
+require("menus")
 require("character")
 require("npc")
 
@@ -19,8 +21,5 @@ function love.draw()
   -- draw npc.list
   npc.draw()
 
-  -- draw text
-  love.graphics.setFont(font.base)
-  love.graphics.setColor({255, 255, 255})
-  love.graphics.print("LÖVE", 10, 10)
+  menu.draw()
 end
