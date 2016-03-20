@@ -28,9 +28,9 @@ menu.draw = function()
   local optContent = ""
   for i, v in ipairs(menu.options) do
     if v.active or i == 1 then
-      optContent = optContent .. "Ø "
+      optContent = optContent .. "▷ "
     else
-      optContent = optContent .. "O "
+      optContent = optContent .. "▶ "
     end
     optContent = optContent .. v.text .. "\n"
   end

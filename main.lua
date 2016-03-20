@@ -21,5 +21,6 @@ function love.draw()
   -- draw npc.list
   npc.draw()
 
+  -- draw menu
   menu.draw()
 end
